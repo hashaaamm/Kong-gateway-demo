@@ -10,39 +10,9 @@ This demo project demonstrates the usage of Kong API Gateway with multiple micro
 - Accounts Service: Django-based microservice for user registration and JWT management.
 - Postgres (Accounts): Database used by the Accounts service
 
+## Architecture
 
-                     +------------+ 
-                     |            |
-                     |    User    |
-                     |            |
-                     +-----+------+
-                           |
-                           |
-                           |
-                     +-----v------+
-                     |            |
-                     |    Kong    |  
-                     |            |
-                     +-----+------+
-                           |
-            +--------------+---------------+
-            |              |               |
-     +------v-----+  +-----v-----+   +-----v-----+
-     |            |  |           |   |           |
-     |  Reports   |  |  Results  |   | Accounts  |
-     |  Service   |  |  Service  |   |  Service  |
-     |            |  |           |   |           |
-     +------------+  +-----------+   +-----+-----+
-                                            |
-                                            |
-                                       +----v--------+
-                                       |             |
-                                       |  Postgres   |
-                                       |  (Accounts) |
-                                       |             |
-                                       +-------------+
-
-
+![Architecture Diagram](kong.jpg)
 
 
 ## Prerequisites
