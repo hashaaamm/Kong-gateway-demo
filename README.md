@@ -15,27 +15,27 @@ This demo project demonstrates the usage of Kong API Gateway with multiple micro
                      |            |
                      |    User    |
                      |            |
-                     +-----+------+   
+                     +-----+------+
                            |
                            |
                            |
-                     +-----v------+               +---------------------+
-                     |            |               |                     |
-                     |     Kong   |  ___________  |   Postgres (Kong)   |
-                     |            |               |                     |
-                     +-----+------+               +---------------------+
+                     +-----v------+
+                     |            |
+                     |    Kong    |  
+                     |            |
+                     +-----+------+
                            |
             +--------------+---------------+
             |              |               |
      +------v-----+  +-----v-----+   +-----v-----+
      |            |  |           |   |           |
      |  Reports   |  |  Results  |   | Accounts  |
-     |   Service  |  |  Service  |   |  Service  |
+     |  Service   |  |  Service  |   |  Service  |
      |            |  |           |   |           |
      +------------+  +-----------+   +-----+-----+
                                             |
                                             |
-                                       +------v------+
+                                       +----v--------+
                                        |             |
                                        |  Postgres   |
                                        |  (Accounts) |
