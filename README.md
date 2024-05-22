@@ -37,7 +37,7 @@ brew install deck
 ### Docker Setup
 Each project contains its own Dockerfile for building the respective service containers. The project also contains a Docker Compose file for orchestrating the services.
 
-## Usage
+## Setup
 To use this demo, follow these steps:
 
 Start Kong in DB mode with PostgreSQL:
@@ -50,3 +50,47 @@ Import the configurations:
 make kong-import
 ```
 
+
+## How to use?
+
+### To access Kong admin
+Go to http://localhost:8002/
+
+
+### To Register user
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"email":"newuser@example.com", "password":"mysecretpassword"}' http://localhost:8000/api/auth/users/
+```
+
+### To login / Get token
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"email":"newuser@example.com", "password":"mysecretpassword"}' http://localhost:8000/api/auth/jwt/create/
+```
+
+### Make a get request to result service which requires auth
+
+```bash
+curl -H "Authorization: Bearer <your-token-goes-here>" http://localhost:8000/results/
+```
+
+### Make a get request to report service which doesn't requires auth
+
+```bash
+curl -X GET http://localhost:8000/reports/
+```
+
+## Kong Features
+* JWT
+* Proxy caching
+* Request transformer
+* Response transformer
+* Request log
+* Cors
+* Ip restriction
+* Rate limiting
+* Request size limiting
+* Lambda functions
+* Log to file/http/Tcp
+* Deck CLI
