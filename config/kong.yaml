@@ -1,0 +1,130 @@
+_format_version: "3.0"
+consumers:
+- jwt_secrets:
+  - algorithm: HS256
+    key: mykey
+    secret: mysecretkey
+  username: django-consumer
+services:
+- connect_timeout: 60000
+  enabled: true
+  host: account-service
+  name: account-service
+  port: 8000
+  protocol: http
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: account-service-routes
+    path_handling: v0
+    paths:
+    - /admin
+    - /api
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+  write_timeout: 60000
+- connect_timeout: 60000
+  enabled: true
+  host: report-service
+  name: report-service
+  plugins:
+  - config:
+      cache_control: false
+      cache_ttl: 300
+      content_type:
+      - text/plain
+      - application/json
+      ignore_uri_case: false
+      memory:
+        dictionary_name: kong_db_cache
+      request_method:
+      - GET
+      - HEAD
+      response_code:
+      - 200
+      - 301
+      - 404
+      response_headers:
+        X-Cache-Key: true
+        X-Cache-Status: true
+        age: true
+      storage_ttl: null
+      strategy: memory
+      vary_headers: null
+      vary_query_params: null
+    enabled: true
+    name: proxy-cache
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+  port: 8000
+  protocol: http
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: report-service-routes
+    path_handling: v0
+    paths:
+    - /reports
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+  write_timeout: 60000
+- connect_timeout: 60000
+  enabled: true
+  host: result-service
+  name: result-service
+  plugins:
+  - config:
+      anonymous: null
+      claims_to_verify: null
+      cookie_names: []
+      header_names:
+      - authorization
+      key_claim_name: iss
+      maximum_expiration: 0
+      run_on_preflight: true
+      secret_is_base64: false
+      uri_param_names:
+      - jwt
+    enabled: true
+    name: jwt
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+  port: 8000
+  protocol: http
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: result-service-routes
+    path_handling: v0
+    paths:
+    - /results
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: false
+  write_timeout: 60000
