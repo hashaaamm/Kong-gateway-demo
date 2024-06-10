@@ -32,6 +32,29 @@ services:
   write_timeout: 60000
 - connect_timeout: 60000
   enabled: true
+  host: ${{ env "DECK_JSON" }}
+  name: json-placeholder
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    name: todos
+    path_handling: v0
+    paths:
+    - /todos
+    preserve_host: false
+    protocols:
+    - http
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  write_timeout: 60000
+- connect_timeout: 60000
+  enabled: true
   host: report-service
   name: report-service
   plugins:
